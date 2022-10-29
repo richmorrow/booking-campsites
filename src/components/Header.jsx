@@ -17,7 +17,7 @@ export default function Header() {
             </div>
             <div>
                 <ul className='flex space-x-10'>
-                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMathRoute("/") && "text-black border-b-red-500"}`} onClick={()=>navigate("/offers")}>Главная</li>
+                    <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMathRoute("/") && "text-black border-b-red-500"}`} onClick={()=>navigate("/")}>Главная</li>
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMathRoute("/offers") && "text-black border-b-red-500"}`} onClick={()=>navigate("/offers")}>Предложения</li>
                     <li className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${pathMathRoute("/sign-in") && "text-black border-b-red-500"}`} onClick={()=>navigate("/sign-in")}>Авторизация</li>
                 </ul>
@@ -26,3 +26,5 @@ export default function Header() {
     </div>
   )
 }
+
+
