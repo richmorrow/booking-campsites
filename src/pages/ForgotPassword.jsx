@@ -1,12 +1,25 @@
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import OAuth from "../components/OAuth";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   function onChange(e) {
     setEmail(e.target.value);
+  }
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    try {
+      const auth = getAuth();
+      await sendPasswordResetEmail(auth, email);
+      toast.success("Письмо отправлено");
+    } catch (error) {
+      toast.error("Не удалось отправить сброшенный пароль");
+    }
   }
   return (
     <section>
@@ -14,13 +27,13 @@ export default function ForgotPassword() {
       <div className="flex justify-center flex-wrap items-center px-6 py-12 max-w-6xl mx-auto">
         <div className="md:w-[70%] lg:w-[50%] mb-12 md:mb-6">
           <img
-            src="https://campingyourway.net/wp-content/uploads/2022/09/Camping_and_Outdoor_Activity_full2.jpg"
+            src="https://cdn.standardmedia.co.ke/images/wysiwyg/images/WqAI9hSMJNeCY8s7VpJph5DJWTFv1U42sBm1MglN.jpg"
             alt="key"
             className="w-full rounded-2xl"
           />
         </div>
         <div className="w-full sm:w-[70%] md:w-[70%] lg:w-[40%] lg:ml-20 ">
-          <form>
+          <form onSubmit={onSubmit}>
             <input
               type="Email"
               id="email"
@@ -44,7 +57,7 @@ export default function ForgotPassword() {
                   to="/sign-in"
                   className="text-blue-600 hover:text-blue-700 transition duration-200 ease-in-out ml-1"
                 >
-                  Войти
+                  Авторизация
                 </Link>
               </p>
             </div>
