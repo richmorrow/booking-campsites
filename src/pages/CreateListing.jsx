@@ -12,9 +12,10 @@ import { getAuth } from "firebase/auth";
 import { v4 as uuidv4 } from "uuid";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
-
+import { useNavigate } from "react-router-dom";
 
 export default function CreateListing() {
+  const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -90,13 +91,14 @@ export default function CreateListing() {
     let location;
     if (geolocationEnabled) {
       const response = await fetch(
-        `https://geocode-maps.yandex.ru/1.x/?apikey=d2f6ec42-c614-4988-9581-29a09ac6c048&format=json&geocode=${address}`
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
+        // `https://geocode-maps.yandex.ru/1.x/?apikey=d2f6ec42-c614-4988-9581-29a09ac6c048&format=json&geocode=${address}`
       );
       const data = await response.json();
       console.log(data);
-      
-      // geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
-      // geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
+    
+      geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
+      geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
 
       location = data.status === "ZERO_RESULTS" && undefined;
 
@@ -159,9 +161,12 @@ export default function CreateListing() {
     };
     delete formDataCopy.images;
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
+    delete formDataCopy.latitude;
+    delete formDataCopy.longitude;
     const docRef = await addDoc(collection(db, "listings"), formDataCopy);
     setLoading(false);
     toast.success("Объявление создано");
+    navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
   if (loading) {
