@@ -178,7 +178,7 @@ export default function CreateListing() {
       <main className="max-w-md px-4 mx-auto bg-gray-100 bg-opacity-90">
         <h1 className="text-3xl text-center pt-4 font-bold">Заполните форму</h1>
         <form onSubmit={onSubmit}>
-          <p className="text-lg mt-6 font-semibold">Аренда / Продажа </p>
+          <p className="text-lg mt-6 font-semibold">Продажа / Аренда</p>
           <div className="flex">
             <button
               type="button"
@@ -191,7 +191,7 @@ export default function CreateListing() {
                   : "bg-red-600 text-white"
               }`}
             >
-              Аренда
+              Продажа
             </button>
             <button
               type="button"
@@ -204,7 +204,7 @@ export default function CreateListing() {
                   : "bg-red-600 text-white"
               }`}
             >
-              Продажа
+              Аренда
             </button>
           </div>
           <p className="text-lg mt-6 font-semibold">Наименование</p>
