@@ -29,7 +29,7 @@ export default function Contact({ userRef, listing }) {
       {landlord !== null && (
         <div className="flex flex-col w-full mt-6">
           <p>
-            {landlord.name}, заполните форму для бронирования{" "}
+            Заполните форму для бронирования{" "}
             {listing.name.toLowerCase()}
           </p>
           <div className="mt-3 mb-6 ">
