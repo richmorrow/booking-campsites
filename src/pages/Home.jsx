@@ -113,7 +113,7 @@ export default function Home() {
         {offerListings && offerListings.length > 0 && (
           <div className="m-2 mb-6">
             <h2 className="px-3 text-2xl mt-6 font-semibold">
-              Последние предложения
+              Предложения со скидкой
             </h2>
             <Link to="/offers">
               <p className="px-3 text-sm text-blue-600 hover:text-blue-800 transition duration-150 ease-in-out">

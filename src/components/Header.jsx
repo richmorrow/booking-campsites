@@ -50,7 +50,7 @@ export default function Header() {
               }`}
               onClick={() => navigate("/offers")}
             >
-              Предложения месяца
+              Специальное предложение
             </li>
             <li
               className={`cursor-pointer py-3 text-sm font-semibold text-gray-400 border-b-[3px] border-b-transparent ${
