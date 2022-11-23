@@ -19,6 +19,13 @@ service cloud.firestore {
     	allow create;
     	allow update: if request.auth.uid == user
     }
+
+     // Admins
+    match /admins/{admin} {
+    	allow read;
+    	allow create;
+    	allow update: if request.auth.uid == user
+    }
   }
 }
 

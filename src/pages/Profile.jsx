@@ -5,6 +5,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  getDoc,
   orderBy,
   query,
   updateDoc,
@@ -30,6 +31,30 @@ export default function Profile() {
     email: auth.currentUser.email,
   });
   const { name, email } = formData;
+
+  const [isAdmin, setIsAdmin] = useState(false)
+
+// добавление проверки => админ или пользователь
+
+  useEffect(() => {
+    async function fetchAdmins() {
+      try {
+        const listingRef = collection(db, "admins");
+        const doc = await getDocs(listingRef);
+
+       const admin =  doc.docs[0].data();
+
+       if (admin.email === auth.currentUser.email) {
+        setIsAdmin(true)
+       }
+      } catch (error) {
+        console.log({ error });
+      }
+    }
+
+    fetchAdmins();
+  }, []);
+
   function onLogout() {
     auth.signOut();
     navigate("/");
@@ -150,19 +175,21 @@ export default function Profile() {
               </p>
             </div>
           </form>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 
+          {isAdmin && (
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white uppercase px-7 py-3 text-sm font-medium rounded shadow-md hover:bg-blue-700 
             transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800"
-          >
-            <Link
-              to="/create-listing"
-              className="flex justify-center items-center"
             >
-              <GiCampingTent className="mr-2 text-3xl" />
-              Создать объявление
-            </Link>
-          </button>
+              <Link
+                to="/create-listing"
+                className="flex justify-center items-center"
+              >
+                <GiCampingTent className="mr-2 text-3xl" />
+                Создать объявление
+              </Link>
+            </button>
+          )}
         </div>
       </section>
       <div className=" max-w-6xl px-3 mt-6 mx-auto">
