@@ -34,7 +34,7 @@ export default function Profile() {
 
   const [isAdmin, setIsAdmin] = useState(false)
 
-// добавление проверки => админ или пользователь
+// добавление проверки admins
 
   useEffect(() => {
     async function fetchAdmins() {
