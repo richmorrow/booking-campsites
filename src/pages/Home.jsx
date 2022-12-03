@@ -18,6 +18,29 @@ import ListingItem from "../components/ListingItem";
 export default function Home() {
   // Предложения месяца
   const [offerListings, setOfferListings] = useState(null);
+  const [discrict, setDiscrict] = useState(null);
+  const [furnished, setFurnished] = useState(null);
+
+  const handleChange = ({ target }) => {
+    if (target.value === "Все") {
+      setDiscrict(null);
+
+      return;
+    }
+
+    setDiscrict(target.value);
+  };
+
+  const handleFurnishedChange = ({ target }) => {
+    if (target.value === "Все") {
+      setFurnished(null);
+
+      return;
+    }
+
+    setFurnished(target.value === "true");
+  };
+
   useEffect(() => {
     async function fetchListings() {
       try {
@@ -106,9 +129,52 @@ export default function Home() {
     }
     fetchListings();
   }, []);
+
+  console.log({ offerListings });
+
   return (
     <div>
       <Slider />
+      <div className="max-w-6xl mx-auto pt-4 space-y-6 flex h-[100px]">
+        <div className="m-6 mb-6">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Выберите область
+          </label>
+          <select
+            onChange={handleChange}
+            id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>Все</option>
+            <option value="Бре">Брест</option>
+            <option value="Вит">Витебск</option>
+            <option value="Гом">Гомель</option>
+            <option value="Гро">Гродно</option>
+            <option value="Мин">Минск</option>
+            <option value="Мог">Могилевская</option>
+          </select>
+        </div>
+        <div className="m-2 mb-6">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 "
+          >
+            Мебель
+          </label>
+          <select
+            onChange={handleFurnishedChange}
+            id="countries"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          >
+            <option selected>Все</option>
+            <option value={true}>Есть</option>
+            <option value={false}>Нет</option>
+          </select>
+        </div>
+      </div>
       <div className="max-w-6xl mx-auto pt-4 space-y-6">
         {offerListings && offerListings.length > 0 && (
           <div className="m-2 mb-6">
@@ -121,13 +187,24 @@ export default function Home() {
               </p>
             </Link>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {offerListings.map((listing) => (
-                <ListingItem
-                  key={listing.id}
-                  listing={listing.data}
-                  id={listing.id}
-                 />
-              ))}
+              {offerListings
+                .filter((listing) =>
+                  discrict ? listing.data.address.includes(discrict) : listing
+                )
+                .filter((listing) => {
+                  console.log({ furnished }, listing.data.furnished);
+
+                  return furnished !== null
+                    ? listing.data.furnished === furnished
+                    : listing;
+                })
+                .map((listing) => (
+                  <ListingItem
+                    key={listing.id}
+                    listing={listing.data}
+                    id={listing.id}
+                  />
+                ))}
             </ul>
           </div>
         )}
@@ -142,13 +219,17 @@ export default function Home() {
               </p>
             </Link>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {rentListings.map((listing) => (
-                <ListingItem
-                  key={listing.id}
-                  listing={listing.data}
-                  id={listing.id}
-                 />
-              ))}
+              {rentListings
+                .filter((listing) =>
+                  discrict ? listing.data.address.includes(discrict) : listing
+                )
+                .map((listing) => (
+                  <ListingItem
+                    key={listing.id}
+                    listing={listing.data}
+                    id={listing.id}
+                  />
+                ))}
             </ul>
           </div>
         )}
@@ -163,13 +244,17 @@ export default function Home() {
               </p>
             </Link>
             <ul className="sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {saleListings.map((listing) => (
-                <ListingItem
-                  key={listing.id}
-                  listing={listing.data}
-                  id={listing.id}
-                 />
-              ))}
+              {saleListings
+                .filter((listing) =>
+                  discrict ? listing.data.address.includes(discrict) : listing
+                )
+                .map((listing) => (
+                  <ListingItem
+                    key={listing.id}
+                    listing={listing.data}
+                    id={listing.id}
+                  />
+                ))}
             </ul>
           </div>
         )}
