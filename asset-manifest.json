@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/booking-campsites/static/css/main.66fde994.css",
+    "main.js": "/booking-campsites/static/js/main.255004e8.js",
+    "static/js/787.3dcb1c53.chunk.js": "/booking-campsites/static/js/787.3dcb1c53.chunk.js",
+    "static/media/spinner.svg": "/booking-campsites/static/media/spinner.424ecdff5284985dfb1dfeb8426019aa.svg",
+    "index.html": "/booking-campsites/index.html",
+    "main.66fde994.css.map": "/booking-campsites/static/css/main.66fde994.css.map",
+    "main.255004e8.js.map": "/booking-campsites/static/js/main.255004e8.js.map",
+    "787.3dcb1c53.chunk.js.map": "/booking-campsites/static/js/787.3dcb1c53.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.66fde994.css",
+    "static/js/main.255004e8.js"
+  ]
+}
